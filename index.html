@@ -15,16 +15,18 @@
       Cómo integrar react a páginas estáticas existentes
     </p>
     <!-- Acá irá nuestro "CONTAINER" -->
-    <div id="container">
+    <div id="cabecera-1">
+
+    </div>
+    <div id="cabecera-2">
 
     </div>
     <script>
       const div = React.DOM.div
       const h2 = React.DOM.h2
 
-      function Cabecera() {
-        const titulo = 'Hola! Laboratoria es cool!'
-
+      function Cabecera(props) {
+        const titulo = 'Hola! ' + props.saludo
         const elemento = div(
           null,
           h2(
@@ -37,8 +39,13 @@
       }
 
       ReactDOM.render(
-        Cabecera(),
-        document.getElementById('container')
+        Cabecera({ saludo: 'Laboratoria es cool!'}),
+        document.getElementById('cabecera-1')
+      )
+
+      ReactDOM.render(
+        Cabecera({ saludo: 'Laboratoria es chévere!'}),
+        document.getElementById('cabecera-2')
       )
     </script>
   </body>
