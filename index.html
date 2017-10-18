@@ -1,9 +1,3 @@
-
-
-Ejercicio: Nuestra primera interfaz
-
-Convierte la siguiente página HTML a una pagina que utilice integramente React y ReactDOM.
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,40 +6,113 @@ Convierte la siguiente página HTML a una pagina que utilice integramente React 
     <link rel="stylesheet" href="../shared/css/base.css" />
   </head>
   <body>
-    <header>
-      <h1>Getting Started</h1>
-      <p>Descripción</p>
-    </header>
+    <div id="react-container">
+      <p>
+        Si ves esto React <strong>no</strong> está funcionando.
+      </p>
+    </div>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <script>
+      const DOM = React.DOM
 
-    <section id="main" style="width: 70%; float: left">
-      <h2>Main Section</h2>
-      <article>
-        <h3>Titulo 1</h3>
-        <p>Descripcion 1</p>
-        <hr />
-      </article>
-      <article>
-        <h3>Titulo 2</h3>
-        <p>Descripcion 2</p>
-        <hr />
-      </article>
-      <article>
-        <h3>Titulo 3</h3>
-        <p>Descripcion 2</p>
-        <hr />
-      </article>
-    </section>
+      // HEADER
+      function Header(props) {
+        return DOM.header(null,
+          DOM.h1(null, props.titulo),
+          DOM.p(null, props.descripcion)
+        )
+      }
 
-    <aside style="width: 25%; float: right;">
-      <h4>Links</h4>
-      <ul>
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
-        <li><a href="#">Link 4</a></li>
-        <li><a href="#">Link 5</a></li>
-      </ul>
-    </aside>
+      // MAIN SECTION
+      function Article(props) {
+        return DOM.article(null,
+          DOM.h3(null, props.titulo),
+          DOM.p(null, props.descripcion),
+          DOM.hr(null)
+        )
+      }
+
+      function MainSection(props) {
+        const style = {
+          width: '70%',
+          float: 'left'
+        }
+
+        const articles = props.articles.map(function(it) {
+          return Article(it)
+        })
+
+        return DOM.section({ style: style },
+          DOM.h2(null, props.titulo),
+          articles
+        )
+      }
+
+      // ASIDE
+      function AsideLink(props) {
+        return DOM.li(null,
+          DOM.a({ href: props.href }, props.texto)
+        )
+      }
+
+      function Aside(props) {
+        const style = {
+          width: '25%',
+          float: 'right'
+        }
+
+        const links = props.links.map(function(it) {
+          return AsideLink(it)
+        })
+
+        return DOM.section({ style: style },
+          DOM.h4(null, props.titulo),
+          DOM.ul(null, links)
+        )
+      }
+
+      // Integramos todo en un PAGE
+      function Page(props) {
+        return DOM.div(null,
+          Header({
+            titulo: props.headerTitulo,
+            descripcion: props.headerDescripcion
+          }),
+          MainSection({
+            titulo: props.mainSectionTitulo,
+            articles: props.mainSectionArticles
+          }),
+          Aside({
+            titulo: props.asideTitulo,
+            links: props.asideLinks
+          })
+        )
+      }
+
+      const page = Page({
+        headerTitulo: 'Getting Started',
+        headerDescripcion: 'Descripcion',
+        mainSectionTitulo: 'Main Section',
+        mainSectionArticles: [
+          { titulo: 'Titulo 1', descripcion: 'Descripcion 1'},
+          { titulo: 'Titulo 2', descripcion: 'Descripcion 2'},
+          { titulo: 'Titulo 3', descripcion: 'Descripcion 3'}
+        ],
+        asideTitulo: 'Links',
+        asideLinks: [
+          { href: '#', texto: 'Link 1'},
+          { href: '#', texto: 'Link 2'},
+          { href: '#', texto: 'Link 3'},
+          { href: '#', texto: 'Link 4'},
+          { href: '#', texto: 'Link 5'}
+        ]
+      })
+
+      ReactDOM.render(
+        page,
+        document.getElementById('react-container')
+      );
+    </script>
   </body>
 </html>
-
