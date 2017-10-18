@@ -9,44 +9,37 @@
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
   </head>
   <body>
-    <h1>Getting Started</h1>
-    <h2>Descripción</h2>
-    <p>
-      Cómo integrar react a páginas estáticas existentes
-    </p>
-    <!-- Acá irá nuestro "CONTAINER" -->
-    <div id="cabecera-1">
-
-    </div>
-    <div id="cabecera-2">
-
-    </div>
-    <script>
-      const div = React.DOM.div
-      const h2 = React.DOM.h2
-
-      function Cabecera(props) {
-        const titulo = 'Hola! ' + props.saludo
-        const elemento = div(
-          null,
-          h2(
-            null,
-            titulo
+      <div id="cabecera">
+        <p>
+          Si ves esto React <strong>no</strong> está funcionando.
+        </p>
+      </div>
+    
+      <script>
+        const div = React.DOM.div
+        const h2 = React.DOM.h2
+        const p = React.DOM.p
+        const a = React.DOM.a
+        const b = React.DOM.b
+        const br = React.DOM.br
+    
+        function Cabecera(props) {
+          const titulo = 'Saludo';
+    
+          return div(null,
+            h2({ style: { border: '2px solid green'}}, titulo),
+            p({ style: { border: '2px solid red' }},
+              "Hola ", b({ style: { border: '2px solid blue'}}, props.saludo), ".", br(null),
+              "Un link? ", br(null),
+              a({href:"http://laboratoria.la", style: { border: '2px solid darkorange' } }, "Laboratoria"), "!"
+            ),
           )
-        )
-
-        return elemento
-      }
-
-      ReactDOM.render(
-        Cabecera({ saludo: 'Laboratoria es cool!'}),
-        document.getElementById('cabecera-1')
-      )
-
-      ReactDOM.render(
-        Cabecera({ saludo: 'Laboratoria es chévere!'}),
-        document.getElementById('cabecera-2')
-      )
-    </script>
-  </body>
+        }
+    
+        ReactDOM.render(
+          Cabecera({ nombre: 'Mundo', saludo: 'NOMBRE' }),
+          document.getElementById('cabecera')
+        );
+      </script>
+    </body>
 </html>
